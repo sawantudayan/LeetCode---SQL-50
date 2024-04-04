@@ -1,0 +1,14 @@
+SELECT
+    A.CUSTOMER_ID,
+    COUNT(*) AS COUNT_NO_TRANS
+FROM
+    VISITS A
+WHERE
+    VISIT_ID NOT IN (
+        SELECT
+            DISTINCT VISIT_ID
+        FROM
+            TRANSACTIONS
+    )
+GROUP BY
+    CUSTOMER_ID
