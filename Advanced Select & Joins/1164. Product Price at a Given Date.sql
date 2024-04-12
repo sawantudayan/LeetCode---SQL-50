@@ -1,0 +1,37 @@
+WITH EX AS (
+    SELECT
+        MAX(CHANGE_DATE) AS DATE,
+        PRODUCT_ID AS ID
+    FROM
+        PRODUCTS
+    WHERE
+        CHANGE_DATE <= '2019-08-16'
+    GROUP BY
+        PRODUCT_ID
+)
+SELECT
+    DISTINCT A.PRODUCT_ID,
+    NEW_PRICE AS PRICE
+FROM
+    PRODUCTS A
+WHERE
+    (A.CHANGE_DATE, A.PRODUCT_ID) IN (
+        SELECT
+            *
+        FROM
+            EX
+    )
+UNION
+ALL
+SELECT
+    DISTINCT A.PRODUCT_ID,
+    10 AS PRICE
+FROM
+    PRODUCTS A
+WHERE
+    A.PRODUCT_ID NOT IN (
+        SELECT
+            ID
+        FROM
+            EX
+    )
