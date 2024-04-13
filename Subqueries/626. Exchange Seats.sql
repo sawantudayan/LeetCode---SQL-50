@@ -1,0 +1,9 @@
+SELECT
+    ID,
+    CASE
+        WHEN MOD(ID, 2) = 0 THEN (
+            LAG(STUDENT) OVER (ORDER BY ID))
+        ELSE (LEAD(STUDENT, 1, STUDENT) OVER (ORDER BY ID))
+    END AS 'STUDENT'
+FROM
+    SEAT
