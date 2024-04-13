@@ -1,0 +1,23 @@
+WITH CTE AS (
+    SELECT
+        REQUESTER_ID AS ID
+    FROM
+        REQEUSTACCEPTED
+    UNION
+    ALL
+    SELECT
+        ACCEPTER_ID AS ID
+    FROM
+        REQUESTACCEPTED
+)
+SELECT
+    ID,
+    COUNT(ID) AS NUM
+FROM
+    CTE
+GROUP BY
+    ID
+ORDER BY
+    NUM DESC
+LIMIT
+    1
